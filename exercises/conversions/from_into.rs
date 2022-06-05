@@ -1,3 +1,5 @@
+use std::default;
+
 // The From trait is used for value-to-value conversions.
 // If From is implemented correctly for a type, the Into trait should work conversely.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
@@ -24,7 +26,7 @@ impl Default for Person {
 // with something like `"4".parse::<usize>()`. The outcome of this needs to
 // be handled appropriately.
 //
-// Steps:
+// Steps:()
 // 1. If the length of the provided string is 0, then return the default of Person
 // 2. Split the given string on the commas present in it
 // 3. Extract the first element from the split operation and use it as the name
@@ -33,10 +35,24 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
-
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let parts: Vec<&str> = s.split(',').collect();
+
+        if parts.len() == 2 && parts[0].len() > 0 {
+            let age: Result<usize, _> = parts[1].parse();
+
+            if let Ok(age) = age {
+                Person {
+                    name: parts[0].into(),
+                    age: age.into(),
+                }
+            } else {
+                Person::default()
+            }
+        } else {
+            Person::default()
+        }
     }
 }
 

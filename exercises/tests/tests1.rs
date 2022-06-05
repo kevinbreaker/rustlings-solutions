@@ -6,12 +6,20 @@
 // This test has a problem with it -- make the test compile! Make the test
 // pass! Make the test fail! Execute `rustlings hint tests1` for hints :)
 
-// I AM NOT DONE
+
+fn multiplier(numberA: i32, numberB: i32) -> i32 {
+    numberA * numberB
+}
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn you_can_assert() {
-        assert!();
+    fn test_multiplier() {
+        const RESULT: i32 = 12 * 24;
+        let multiplier = multiplier(12, 24);
+
+        assert!(multiplier == RESULT);
     }
 }
